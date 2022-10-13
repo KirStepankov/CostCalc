@@ -4,16 +4,21 @@ namespace CostCalc;
 
 use CostCalc\Patterns\PropertyContainer\PropertyContainer;
 
+//TODO Внедрить проверку на входные данные, а именно price и volume
 class ProductsCosts extends ProductsAbstract
 {
-
-
+    /**
+     * @return array
+     */
     public function getCosts(): array
     {
         $this->normalizeWeights();
         return $this->createCostsProducts();
     }
 
+    /**
+     * @return array
+     */
     private function createCostsProducts(): array
     {
         $costsProducts = new PropertyContainer();
@@ -28,7 +33,7 @@ class ProductsCosts extends ProductsAbstract
 
             $arr = [
                 'price' => $price,
-                'volume' => $weight
+                'weight' => $weight
             ];
 
             $costsProducts->setProperty($key, $arr);
@@ -37,25 +42,33 @@ class ProductsCosts extends ProductsAbstract
         return $costsProducts->getProperties();
     }
 
-    //TODO Возможно заменить цикль на array_map
-    private function normalizeWeights()
+    /**
+     * @return void
+     */
+    private function normalizeWeights(): void
     {
         foreach ($this->productsPrices->getProperties() as $key => $property) {
-            if ($property['volume'] == $this->hundredPercent) {
+            if ($property['weight'] == $this->hundredPercent) {
                 continue;
             }
 
-            $this->updateProduct($key, $property['volume'], $property['price']);
+            $this->updateProduct($key, $property['weight'], $property['price']);
         }
     }
 
-    private function updateProduct($key, $volume, $price)
+    /**
+     * @param $key
+     * @param $volume
+     * @param $price
+     * @return void
+     */
+    private function updateProduct($key, $volume, $price): void
     {
-        $percent = Helper::getPercentFromNumber($this->hundredPercent, $volume, true);
+        $percent = Helper::getPercentFromNumber($this->hundredPercent, $volume);
 
         $arr = [
             'price' => Helper::getIncreasePrice($price, $percent),
-            'volume' => $this->hundredPercent
+            'weight' => $this->hundredPercent
         ];
 
         $this->productsPrices->updateProperty($key, $arr);
