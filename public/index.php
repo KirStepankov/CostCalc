@@ -14,7 +14,7 @@ $productsPrices
 
 $productsWeights = new PropertyContainer();
 $productsWeights
-    ->setProperty('Молоко', 330)
+    ->setProperty('Молоко', 3000)
     ->setProperty('Сахар', 500)
     ->setProperty('Сливки', 500)
     ->setProperty('Шоколад чёрный', 300);

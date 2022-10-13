@@ -38,10 +38,9 @@ class PropertyContainer implements PropertyContainerContract
 
     /**
      * @param $propertyName
-     * @param $value
      * @return mixed
      */
-    public function getProperty($propertyName, $value): mixed
+    public function getProperty($propertyName): mixed
     {
         return $this->propertyContainer[$propertyName];
     }
@@ -53,10 +52,9 @@ class PropertyContainer implements PropertyContainerContract
 
     /**
      * @param $propertyName
-     * @param $value
      * @return PropertyContainer
      */
-    public function deleteProperty($propertyName, $value): PropertyContainer
+    public function deleteProperty($propertyName): PropertyContainer
     {
         unset($this->propertyContainer[$propertyName]);
         return $this;
